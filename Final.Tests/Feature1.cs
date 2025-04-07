@@ -1,12 +1,7 @@
 ﻿namespace Final.Tests;
 
-public class Tests
+public class Feature1
 {
-    [SetUp]
-    public void Setup()
-    {
-    }
-
     [Test]
     public void Test1()
     {
