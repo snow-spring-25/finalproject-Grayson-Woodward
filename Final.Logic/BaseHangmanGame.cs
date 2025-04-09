@@ -52,30 +52,32 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
         wordToGuess = PickRandomWord();
     }
 
-    public virtual bool MakeGuess(char letter, string playerName) // Req 1.2.3
+public virtual bool MakeGuess(char letter, string playerName) // Req 1.2.3
+{
+    if (!started) throw new InvalidOperationException("Game not started");
+    if (IsGameOver) throw new InvalidOperationException("Game is over");
+    if (playerName != CurrentPlayer) throw new InvalidOperationException("It's not your turn"); // Req 1.4.3
+
+    letter = char.ToLower(letter);
+
+    if (guessedLetters.Contains(letter)) // Req 1.4.3
+        throw new InvalidOperationException("Letter already guessed");
+
+    guessedLetters.Add(letter);
+
+    if (!wordToGuess.ToLower().Contains(letter))
     {
-        if (!started) throw new InvalidOperationException("Game not started");
-        if (IsGameOver) throw new InvalidOperationException("Game is over");
-        if (playerName != CurrentPlayer) throw new InvalidOperationException("It's not your turn");
-
-        letter = char.ToLower(letter);
-        if (guessedLetters.Contains(letter))
-            throw new InvalidOperationException("Letter already guessed");
-
-        guessedLetters.Add(letter);
-        if (!wordToGuess.ToLower().Contains(letter))
-        {
-            attemptsLeft--;
-        }
-
-        if (!IsGameOver && attemptsLeft > 0)
-        {
-            currentPlayerIndex = (currentPlayerIndex + 1) % players.Count;
-        }
-
-        EndGame();
-
-        return true;
+        attemptsLeft--;
     }
+
+    if (!IsGameOver && attemptsLeft > 0)
+    {
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.Count;
+    }
+
+    EndGame(); 
+
+    return true;
+}
     protected abstract string PickRandomWord();// Req 1.2.3
 }
