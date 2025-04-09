@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 
 namespace Final.Logic;
 
-    public enum WordCategory
+    public enum WordCategory //Req 1.2.3
     {
         StarWars,
         Cosmere,
