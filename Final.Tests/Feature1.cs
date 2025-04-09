@@ -1,9 +1,9 @@
 ﻿namespace Final.Tests;
 using Final.Logic;
-public class Feature1
+public class Feature1 //req1.1.1 & 1.1.2
 {
     [Test]
-    public void CreateGame_ThenJoinGame_ShouldSucceed()
+    public void CreateGameThenJoinGameShouldSucceed()
     {
         var game = GameLobby.CreateGame(WordCategory.StarWars);
         game.AddPlayer("PlayerOne");
@@ -16,11 +16,11 @@ public class Feature1
     }
 
     [Test]
-    public void JoinGame_AfterGameStarted_ShouldReturnNull()
+    public void JoinGameAfterGameStartedShouldReturnNull()
     {
         var game = GameLobby.CreateGame(WordCategory.Foods);
         game.AddPlayer("PlayerOne");
-        game.Start(); // Start the game
+        game.Start(); 
 
         var joined = GameLobby.JoinGame(WordCategory.Foods);
 
@@ -28,7 +28,7 @@ public class Feature1
     }
 
     [Test]
-    public void StartGame_WithoutPlayers_ShouldThrow()
+    public void StartGameWithoutPlayersShouldThrow()
     {
         var game = GameLobby.CreateGame(WordCategory.Cosmere);
         var ex = Assert.Throws<InvalidOperationException>(() => game.Start());
@@ -37,7 +37,7 @@ public class Feature1
     }
 
     [Test]
-    public void AddPlayer_AfterGameStarted_ShouldThrow()
+    public void AddPlayerAfterGameStartedShouldThrow()
     {
         var game = GameLobby.CreateGame(WordCategory.StarWars);
         game.AddPlayer("PlayerOne");
