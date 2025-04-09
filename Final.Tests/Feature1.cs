@@ -3,38 +3,47 @@ using Final.Logic;
 public class Feature1
 {
     [Test]
-    public void CreateGame_HappyPath_GameIsCreatedWithPlayer() //Req 1.1.1
+    public void CreateGame_ThenJoinGame_ShouldSucceed()
     {
-        string gameId = "happyGame";
-        string playerName = "PlayerOne";
+        var game = GameLobby.CreateGame(WordCategory.StarWars);
+        game.AddPlayer("PlayerOne");
 
-        var game = GameManager.CreateGame(gameId, playerName);
+        var joinedGame = GameLobby.JoinGame(WordCategory.StarWars);
 
-        Assert.That(game != null);
-        Assert.That(gameId == game.GameId);
-        Assert.That(game.Players, Does.Contain(playerName));
-    }
-        [Test]
-        public void CreateGame_DuplicateGameId_ThrowsInvalidOperationException() //Req1.1.2
-        {
-            string gameId = "duplicateGame";
-            GameManager.CreateGame(gameId, "PlayerOne");
-
-            var exception = Assert.Throws<InvalidOperationException>(() =>
-                GameManager.CreateGame(gameId, "PlayerTwo"));
-
-            Assert.That(exception.Message, Is.EqualTo("Game already exists."));
-        }
-
-        [Test]
-        public void JoinGame_InvalidGameId_ThrowsInvalidOperationException() //Req1.1.2
-        {
-            string invalidGameId = "nonexistent";
-
-            var exception = Assert.Throws<InvalidOperationException>(() =>
-                GameManager.JoinGame(invalidGameId, "PlayerGhost"));
-
-            Assert.That(exception.Message, Is.EqualTo("Game not found."));
-        }
+        Assert.That(joinedGame, Is.Not.Null);
+        Assert.That(joinedGame.Players, Does.Contain("PlayerOne"));
+        Assert.That(joinedGame.Started, Is.False);
     }
 
+    [Test]
+    public void JoinGame_AfterGameStarted_ShouldReturnNull()
+    {
+        var game = GameLobby.CreateGame(WordCategory.Foods);
+        game.AddPlayer("PlayerOne");
+        game.Start(); // Start the game
+
+        var joined = GameLobby.JoinGame(WordCategory.Foods);
+
+        Assert.That(joined, Is.Null);
+    }
+
+    [Test]
+    public void StartGame_WithoutPlayers_ShouldThrow()
+    {
+        var game = GameLobby.CreateGame(WordCategory.Cosmere);
+        var ex = Assert.Throws<InvalidOperationException>(() => game.Start());
+
+        Assert.That(ex.Message, Does.Contain("Cannot start game without players"));
+    }
+
+    [Test]
+    public void AddPlayer_AfterGameStarted_ShouldThrow()
+    {
+        var game = GameLobby.CreateGame(WordCategory.StarWars);
+        game.AddPlayer("PlayerOne");
+        game.Start();
+
+        var ex = Assert.Throws<InvalidOperationException>(() => game.AddPlayer("PlayerTwo"));
+        Assert.That(ex.Message, Does.Contain("Game already started"));
+    }
+}
