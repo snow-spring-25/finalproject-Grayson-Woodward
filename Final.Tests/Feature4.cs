@@ -4,7 +4,7 @@ namespace Final.Tests;
 
 public class Feature4
 {
-    [Test]
+    [Test] //Req 1.4.1
     public void MakeGuessShouldThrowErrorWhenItIsNotPlayer1sTurn()
     {
         var category = WordCategory.StarWars;
@@ -16,7 +16,7 @@ public class Feature4
         var ex = Assert.Throws<InvalidOperationException>(() => game.MakeGuess('v', "Player2"));
         Assert.That(ex.Message, Is.EqualTo("It's not your turn"));
     }
-    [Test] 
+    [Test] //Req 1.4.2
     public void MakeGuessShouldThrowErrorWhenLetterIsAlreadyGuessed()
     {
         var category = WordCategory.StarWars;
