@@ -1,6 +1,6 @@
 using System;
 using Final.Logic;
-namespace Final.tests;
+namespace Final.Tests;
 public class Feature2
 {
     [Test] // REQ#1.2.1
