@@ -4,7 +4,7 @@ namespace Final.Logic;
 
 public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
 {
-    protected readonly int maxAttempts = 5; //Req1.5.3
+    protected readonly int maxAttempts = 5; // Req 1.5.3
     protected int attemptsLeft; // Req 1.5.3
     protected string wordToGuess = "";
     protected HashSet<char> guessedLetters = new();
@@ -23,7 +23,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
     public string GameResult { get; private set; } = string.Empty;
     public Dictionary<string, int> PlayerScores => playerScores;
 
-    protected void EndGame() //Req 1.3.3
+    protected void EndGame() // Req 1.3.3
     {
         if (IsGameOver)
         {
@@ -40,7 +40,9 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
 
     public virtual void AddPlayer(string playerName) // Req 1.1.3
     {
-        if (started) throw new InvalidOperationException("Game already started"); // Req 1.6.3
+        if (started)
+            throw new InvalidOperationException("You cannot add players after the game has started. Please wait for a new round to join."); // Req 1.6.3
+
         players.Add(playerName);
         playerScores[playerName] = 0;
     }
@@ -48,7 +50,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
     public virtual void Start() // Req 1.1.3
     {
         if (!players.Any())
-            throw new InvalidOperationException("Cannot start game without players"); // Req 1.6.3
+            throw new InvalidOperationException("Cannot start the game without at least one player. Please add players first."); // Req 1.6.3
 
         started = true;
         attemptsLeft = maxAttempts;
@@ -57,22 +59,27 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
 
     public bool MakeGuess(char letter, string playerName)
     {
-        if (!started) throw new InvalidOperationException("Game not started"); //Req 1.6.3
-        if (IsGameOver) throw new InvalidOperationException("Game is over"); //Req 1.6.3
-        if (playerName != CurrentPlayer) throw new InvalidOperationException("It's not your turn"); //Req 1.4.3
+        if (!started)
+            throw new InvalidOperationException("The game has not started yet. Please start the game first."); // Req 1.6.3
+
+        if (IsGameOver)
+            throw new InvalidOperationException("The game is over. Please start a new game."); // Req 1.6.3
+
+        if (playerName != CurrentPlayer)
+            throw new InvalidOperationException($"It's not your turn, {playerName}. Please wait for {CurrentPlayer} to make a move."); // Req 1.6.3
 
         letter = char.ToLower(letter);
 
         if (guessedLetters.Contains(letter))
-            throw new InvalidOperationException("Letter already guessed");
+            throw new InvalidOperationException($"The letter '{letter}' has already been guessed. Please try a different letter."); // Req 1.6.3
 
         guessedLetters.Add(letter);
 
         bool correctGuess = wordToGuess.ToLower().Contains(letter);
 
-        bool wordCompleted = wordToGuess.All(c => guessedLetters.Contains(char.ToLower(c))); //Req 1.5.3
+        bool wordCompleted = wordToGuess.All(c => guessedLetters.Contains(char.ToLower(c))); // Req 1.5.3
 
-        if (correctGuess && wordCompleted)
+        if (correctGuess && wordCompleted) // Req 1.5.3
         {
             playerScores[playerName] += wordToGuess.Length * 5;
         }
@@ -91,5 +98,5 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
         return correctGuess;
     }
 
-    protected abstract string PickRandomWord();// Req 1.2.3
+    protected abstract string PickRandomWord(); // Req 1.2.3
 }

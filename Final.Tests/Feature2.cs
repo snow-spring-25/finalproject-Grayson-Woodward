@@ -28,7 +28,7 @@ public class Feature2
         game.Start();
 
         var ex = Assert.Throws<InvalidOperationException>(() => game.MakeGuess('v', "Player2"));
-        Assert.That(ex.Message, Is.EqualTo("It's not your turn"));
+        Assert.That(ex.Message, Is.EqualTo("It's not your turn, Player2. Please wait for Player1 to make a move."));
     }
 
 }

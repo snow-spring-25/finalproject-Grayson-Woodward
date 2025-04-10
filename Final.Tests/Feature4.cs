@@ -14,7 +14,7 @@ public class Feature4
         game.Start();
 
         var ex = Assert.Throws<InvalidOperationException>(() => game.MakeGuess('v', "Player2"));
-        Assert.That(ex.Message, Is.EqualTo("It's not your turn"));
+        Assert.That(ex.Message, Is.EqualTo("It's not your turn, Player2. Please wait for Player1 to make a move."));
     }
     [Test] //Req 1.4.2
     public void MakeGuessShouldThrowErrorWhenLetterIsAlreadyGuessed()
@@ -27,6 +27,6 @@ public class Feature4
         game.MakeGuess('v', "Player1");
 
         var ex = Assert.Throws<InvalidOperationException>(() => game.MakeGuess('v', "Player1"));
-        Assert.That(ex.Message, Is.EqualTo("Letter already guessed"));
+        Assert.That(ex.Message, Is.EqualTo("The letter 'v' has already been guessed. Please try a different letter."));
     }
 }
