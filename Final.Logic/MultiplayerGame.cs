@@ -6,9 +6,9 @@ namespace Final.Logic;
     {
         private static readonly Dictionary<WordCategory, List<string>> wordsByCategory = new()
         {
-            { WordCategory.StarWars, new() { "vader", "yoda", "lightsaber" } },
-            { WordCategory.Cosmere, new() { "storm", "shardblade", "fabrial" } },
-            { WordCategory.Foods, new() { "pizza", "sushi", "lasagna" } }
+            { WordCategory.StarWars, new() { "vader", "yoda", "lightsaber", "Anakin", "Endor", "Hoth", "Skywalker" } },
+            { WordCategory.Cosmere, new() { "storm", "shardblade", "fabrial", "Kaladin", "Dalinar", "Windrunner", "Mistborn", "Harmony" } },
+            { WordCategory.Foods, new() { "pizza", "sushi", "lasagna", "Steak", "Pineapple", "Calazone", "Pretzel", "Hamburger" } }
         };
 
         private WordCategory category;
