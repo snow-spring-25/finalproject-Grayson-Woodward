@@ -98,5 +98,13 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
         return correctGuess;
     }
 
+    public int GetPlayerScore(string playerName) // Req 1.7.3
+    {
+        if (!playerScores.ContainsKey(playerName))
+            throw new ArgumentException("Player not found."); 
+
+        return playerScores[playerName];
+    }
+
     protected abstract string PickRandomWord(); // Req 1.2.3
 }
