@@ -19,7 +19,7 @@ public class Feature5
         game.MakeGuess('e', "Player2");
         game.MakeGuess('r', "Player1");
 
-        Assert.That(game.PlayerScores["Player1"], Is.EqualTo(game.CurrentMaskedWord.Length * 5));
+        Assert.That(game.PlayerScores["Player1"], Is.EqualTo(25));
     }
     [Test] // Req 1.5.2
     public void Player2DoesntGetPoints()

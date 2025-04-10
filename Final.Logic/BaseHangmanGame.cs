@@ -23,7 +23,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
     public string GameResult { get; private set; } = string.Empty;
     public Dictionary<string, int> PlayerScores => playerScores;
 
-    protected void EndGame()
+    protected void EndGame() //Req 1.3.3
     {
         if (IsGameOver)
         {
@@ -55,38 +55,41 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
         wordToGuess = PickRandomWord();
     }
 
-public virtual bool MakeGuess(char letter, string playerName) // Req 1.2.3
-{
-    if (!started) throw new InvalidOperationException("Game not started");
-    if (IsGameOver) throw new InvalidOperationException("Game is over");
-    if (playerName != CurrentPlayer) throw new InvalidOperationException("It's not your turn"); // Req 1.4.3, // Req 1.6.3
-
-    letter = char.ToLower(letter);
-
-    if (guessedLetters.Contains(letter)) // Req 1.4.3
-        throw new InvalidOperationException("Letter already guessed"); // Req 1.6.3
-
-    guessedLetters.Add(letter);
-
-    bool correctGuess = wordToGuess.ToLower().Contains(letter);
-    if (correctGuess && playerName == CurrentPlayer) 
+    public bool MakeGuess(char letter, string playerName)
     {
-        playerScores[playerName] += wordToGuess.Length * 5;
-    }
-    else
-    {
-        attemptsLeft--;
-    }
+        if (!started) throw new InvalidOperationException("Game not started"); //Req 1.6.3
+        if (IsGameOver) throw new InvalidOperationException("Game is over"); //Req 1.6.3
+        if (playerName != CurrentPlayer) throw new InvalidOperationException("It's not your turn"); //Req 1.4.3
 
-    if (!IsGameOver && attemptsLeft > 0)
-    {
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.Count;
+        letter = char.ToLower(letter);
+
+        if (guessedLetters.Contains(letter))
+            throw new InvalidOperationException("Letter already guessed");
+
+        guessedLetters.Add(letter);
+
+        bool correctGuess = wordToGuess.ToLower().Contains(letter);
+
+        bool wordCompleted = wordToGuess.All(c => guessedLetters.Contains(char.ToLower(c))); //Req 1.5.3
+
+        if (correctGuess && wordCompleted)
+        {
+            playerScores[playerName] += wordToGuess.Length * 5;
+        }
+        else if (!correctGuess)
+        {
+            attemptsLeft--;
+        }
+
+        if (!IsGameOver && attemptsLeft > 0)
+        {
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.Count;
+        }
+
+        EndGame();
+
+        return correctGuess;
     }
-
-    EndGame(); 
-
-    return correctGuess;
-}
 
     protected abstract string PickRandomWord();// Req 1.2.3
 }
