@@ -4,11 +4,11 @@ namespace Final.Tests;
 
 public class Feature5
 {
-        [Test] // Req 1.5.1
+    [Test] // Req 1.5.1
     public void Player1MakesTheRightGuessAndGetsPoints()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0));
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0),repo);
         game.AddPlayer("Player1");
         game.AddPlayer("Player2");
         game.Start();
@@ -25,7 +25,7 @@ public class Feature5
     public void Player2DoesntGetPoints()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0));
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0),repo);
         game.AddPlayer("Player1");
         game.AddPlayer("Player2");
         game.Start();

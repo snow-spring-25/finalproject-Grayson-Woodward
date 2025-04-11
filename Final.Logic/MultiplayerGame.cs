@@ -14,7 +14,7 @@ public class MultiplayerHangmanGame : BaseHangmanGame
     private WordCategory category;
     private readonly IRandomSource random;
 
-    public MultiplayerHangmanGame(WordCategory category, IRandomSource random)
+    public MultiplayerHangmanGame(WordCategory category, IRandomSource random, ScoreRepository repo) : base(repo)
     {
         this.category = category;
         this.random = random;

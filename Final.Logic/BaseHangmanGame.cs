@@ -12,6 +12,13 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
     protected int currentPlayerIndex = 0;
     protected bool started = false;
     protected Dictionary<string, int> playerScores = new Dictionary<string, int>();
+    private readonly ScoreRepository scoreRepo;
+    public event Action? OnGameStateChanged;
+
+    public BaseHangmanGame(ScoreRepository scoreRepo)
+    {
+        this.scoreRepo = scoreRepo;
+    }
 
     public bool IsGameOver => attemptsLeft <= 0 || wordToGuess.All(c => guessedLetters.Contains(char.ToLower(c)));
 
@@ -35,6 +42,13 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
             {
                 GameResult = "You let the person die.";
             }
+            
+            foreach (var player in playerScores) //Req 1.8.3
+            {
+                scoreRepo.AddScore(player.Key, player.Value);
+            }
+
+            OnGameStateChanged?.Invoke();
         }
     }
 
@@ -45,6 +59,8 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
 
         players.Add(playerName);
         playerScores[playerName] = 0;
+
+        OnGameStateChanged?.Invoke();
     }
 
     public virtual void Start() // Req 1.1.3
@@ -55,6 +71,8 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
         started = true;
         attemptsLeft = maxAttempts;
         wordToGuess = PickRandomWord();
+
+        OnGameStateChanged?.Invoke();
     }
 
     public bool MakeGuess(char letter, string playerName)
@@ -94,6 +112,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
         }
 
         EndGame();
+        OnGameStateChanged?.Invoke();
 
         return correctGuess;
     }
