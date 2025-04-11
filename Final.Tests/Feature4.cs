@@ -1,14 +1,13 @@
 using System;
 using Final.Logic;
 namespace Final.Tests;
-
 public class Feature4
 {
     [Test] //Req 1.4.1
     public void MakeGuessShouldThrowErrorWhenItIsNotPlayer1sTurn()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category);
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(1));
         game.AddPlayer("Player1");
         game.AddPlayer("Player2");
         game.Start();
@@ -20,7 +19,7 @@ public class Feature4
     public void MakeGuessShouldThrowErrorWhenLetterIsAlreadyGuessed()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category);
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0));
         game.AddPlayer("Player1");
         game.Start();
 

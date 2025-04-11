@@ -8,7 +8,7 @@ public class Feature5
     public void Player1MakesTheRightGuessAndGetsPoints()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category);
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0));
         game.AddPlayer("Player1");
         game.AddPlayer("Player2");
         game.Start();
@@ -25,7 +25,7 @@ public class Feature5
     public void Player2DoesntGetPoints()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category);
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0));
         game.AddPlayer("Player1");
         game.AddPlayer("Player2");
         game.Start();
