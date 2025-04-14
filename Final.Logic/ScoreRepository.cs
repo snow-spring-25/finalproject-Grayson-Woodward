@@ -2,7 +2,7 @@ using System;
 using SQLite;
 namespace Final.Logic;
 
-public class ScoreRepository //Req 1.8.3
+public class ScoreRepository : IScoreRepo //Req 1.8.3
 {
     private readonly SQLiteConnection db;
 
@@ -25,3 +25,4 @@ public class ScoreRepository //Req 1.8.3
                  .ToList();
     }
 }
+

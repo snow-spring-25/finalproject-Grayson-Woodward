@@ -8,7 +8,7 @@ public class Feature3
     public void MakeGuess_ShouldNotifyPlayers_WhenGameEnds_WithWin()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0), repo);
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0), new TestRepository());
         game.AddPlayer("Player1");
         game.AddPlayer("Player2");
         game.Start();
@@ -25,7 +25,7 @@ public class Feature3
     public void MakeGuess_ShouldNotifyPlayers_WhenGameEnds_WithLoss()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0), repo);
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0), new TestRepository());
         game.AddPlayer("Player1");
         game.AddPlayer("Player2");
         game.Start();

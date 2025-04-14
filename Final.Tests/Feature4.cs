@@ -7,7 +7,7 @@ public class Feature4
     public void MakeGuessShouldThrowErrorWhenItIsNotPlayer1sTurn()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category, new TestRandomSource(1),repo);
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(1),new TestRepository());
         game.AddPlayer("Player1");
         game.AddPlayer("Player2");
         game.Start();
@@ -19,7 +19,7 @@ public class Feature4
     public void MakeGuessShouldThrowErrorWhenLetterIsAlreadyGuessed()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0),repo);
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0),new TestRepository());
         game.AddPlayer("Player1");
         game.Start();
 

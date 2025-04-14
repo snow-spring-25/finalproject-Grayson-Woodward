@@ -8,7 +8,7 @@ public class feature6
     public void StartShouldStartTheGameWhenPlayersExist()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category, new TestRandomSource(1), repo);
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(1), new TestRepository());
         game.AddPlayer("Player1");
 
         game.Start();
@@ -20,7 +20,7 @@ public class feature6
     public void StartShouldThrowErrorWhenNoPlayersExist()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category, new TestRandomSource(1),repo);
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(1),new TestRepository());
 
         var ex = Assert.Throws<InvalidOperationException>(() => game.Start());
         Assert.That(ex.Message, Is.EqualTo("Cannot start the game without at least one player. Please add players first.")); // Req 1.6.3

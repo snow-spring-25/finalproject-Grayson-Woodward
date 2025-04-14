@@ -9,4 +9,6 @@ public class ScoreEntry //Req 1.8.3
     public string PlayerName { get; set; }
 
     public int Score { get; set; }
+
+    
 }

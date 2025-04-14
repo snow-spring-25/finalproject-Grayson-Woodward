@@ -7,8 +7,8 @@ public class Feature2
     public void MakeGuessShouldAllowMakingCorrectGuessesWhenItIsPlayer1sTurn()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0), repo);
-        game.AddPlayer("Player2");
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0), new TestRepository());
+        game.AddPlayer("Player1");
         game.Start();
 
         var result = game.MakeGuess('a', "Player1");
@@ -20,7 +20,7 @@ public class Feature2
     public void MakeGuessShouldThrowErrorWhenItIsNotPlayer1sTurn()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0),repo);
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0),new TestRepository());
         game.AddPlayer("Player1");
         game.AddPlayer("Player2");
         game.Start();
