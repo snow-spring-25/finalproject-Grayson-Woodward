@@ -4,6 +4,7 @@ namespace Final.Logic;
 
 public class MultiplayerHangmanGame : BaseHangmanGame
 {
+    public static MultiplayerHangmanGame Instance {get; set;}
     private static readonly Dictionary<WordCategory, List<string>> wordsByCategory = new()
         {
             { WordCategory.StarWars, new() { "vader", "yoda", "lightsaber", "Anakin", "Endor", "Hoth", "Skywalker"} },

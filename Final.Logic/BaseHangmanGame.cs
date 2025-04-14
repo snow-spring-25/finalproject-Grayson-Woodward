@@ -29,6 +29,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
 
     public string GameResult { get; private set; } = string.Empty;
     public Dictionary<string, int> PlayerScores => playerScores;
+    public static BaseHangmanGame Instance {get; set;}
 
     protected void EndGame() // Req 1.3.3
     {
