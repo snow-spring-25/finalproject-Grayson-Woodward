@@ -1,5 +1,26 @@
 @page "/GameRun"
 <h1>Welcome to my hangman Game!</h1>
-<div style="width: 100px;">
-<img src="https://th.bing.com/th/id/R.4bd7481170ddf9422ca4cc95da1dc4f3?rik=F4Vy9uRt5C8jvg&riu=http%3a%2f%2fcommunity.wolfram.com%2fc%2fportal%2fgetImageAttachment%3ffilename%3dhangman.jpg%26userId%3d922964&ehk=3dSoDkk29uGR%2fIKcGjUMUeTJqZJH%2fb5yifXmc6dlf4Q%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1" alt="Head">
-</div>
+
+<button @onclick=PlayerName>Enter Your Name</button>
+
+<img src="=@imgPath"/>
+
+
+
+@code
+{
+    MultiplayerHangmanGame game = MultiplayerHangmanGame.Instance;
+    int imgNum =1;
+    string imgPath => $"Step{imgNum}.png";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        game.OnGameStateChanged += () => InvokeAsync(StateHasChanged);
+    }
+
+    void PlayerName()
+    {
+
+    }
+}
