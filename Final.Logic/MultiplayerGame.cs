@@ -35,5 +35,4 @@ public class MultiplayerHangmanGame : BaseHangmanGame
     }
 
     public List<ScoreEntry> GetTopScores(int count = 10) => scoreRepo.GetTopScores(count);
-
 }

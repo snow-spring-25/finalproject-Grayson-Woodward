@@ -1,9 +1,11 @@
 @page "/GameRun"
+@using System.IO
 @rendermode InteractiveServer
+
 <h1>Multiplayer Hangman</h1>
+
 <div class="xcontainer">
     <div>
-
         @if (!joined)
         {
             <p>Enter your name to join:</p>
@@ -28,32 +30,52 @@
             <h3>Game Started!</h3>
             <p>Word: @game.CurrentMaskedWord</p>
             <p>Current Player: @game.CurrentPlayer</p>
-            <p>Attempts Left: @attemptsLeft</p>
+
+            @if (game.CurrentPlayer == playerName)
+            {
+                <p>It's your turn! Play!</p>
+
+                <input @bind="guessLetter" maxlength="1" placeholder="Guess a letter" />
+                <button @onclick="OnLetterGuess">Guess</button>
+            }
+
+            <p>Attempts Left: @game.AttemptsLeft</p>
+
+            @if (game.GetIncorrectGuesses().Any())
+            {
+                <p><strong>Incorrect Guesses:</strong></p>
+                <div>
+                    @foreach (var incorrectGuess in game.GetIncorrectGuesses())
+                    {
+                        <span>@incorrectGuess </span>
+                    }
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(game.GameResult))
+            {
+                <h2>@game.GameResult</h2>
+            }
         }
     </div>
-    <img id="image"src="@imgPath"/>
+    <img id="image" src="@imgPath" />
 </div>
 
-
-
-
-@code
-{
+@code {
     MultiplayerHangmanGame game = MultiplayerHangmanGame.Instance;
     private string playerName = "";
     private bool joined = false;
     private bool gameStarted = false;
-    private int attemptsLeft => typeof(MultiplayerHangmanGame)
-        .GetField("attemptsLeft", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
-        .GetValue(game) as int? ?? 0;
-    int imgNum =0;
-    string imgPath => $"step {imgNum}.png";
+    private string guessLetter = "";
+
+    private string imgPath => $"step {game.AttemptsLeft}.png";
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         game.OnGameStateChanged += () => InvokeAsync(StateHasChanged);
     }
+
     private void JoinGame()
     {
         try
@@ -66,6 +88,7 @@
             Console.WriteLine($"Error joining game: {ex.Message}");
         }
     }
+
     private void StartGame()
     {
         try
@@ -77,5 +100,23 @@
         {
             Console.WriteLine($"Error starting game: {ex.Message}");
         }
+    }
+
+    private void OnLetterGuess(MouseEventArgs e)
+    {
+        if (string.IsNullOrEmpty(guessLetter) || guessLetter.Length != 1)
+            return;
+
+        char guessedChar = char.ToLower(guessLetter[0]);
+        try
+        {
+            bool correctGuess = game.MakeGuess(guessedChar, playerName);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error making guess: {ex.Message}");
+        }
+
+        guessLetter = "";
     }
 }

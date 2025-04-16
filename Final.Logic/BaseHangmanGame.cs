@@ -14,6 +14,8 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
     protected Dictionary<string, int> playerScores = new Dictionary<string, int>();
     protected readonly IScoreRepo scoreRepo;
     public event Action? OnGameStateChanged;
+    protected HashSet<char> incorrectGuesses = new();
+    public int AttemptsLeft => attemptsLeft;
 
     public BaseHangmanGame(IScoreRepo scoreRepo)
     {
@@ -103,6 +105,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
         }
         else if (!correctGuess)
         {
+            incorrectGuesses.Add(letter);
             attemptsLeft--;
         }
 
@@ -116,6 +119,8 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
 
         return correctGuess;
     }
+
+    public IEnumerable<char> GetIncorrectGuesses() => incorrectGuesses;
 
     public int GetPlayerScore(string playerName) // Req 1.7.3
     {
