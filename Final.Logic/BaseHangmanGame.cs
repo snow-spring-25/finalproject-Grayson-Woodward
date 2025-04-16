@@ -12,7 +12,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
     protected int currentPlayerIndex = 0;
     protected bool started = false;
     protected Dictionary<string, int> playerScores = new Dictionary<string, int>();
-    private readonly IScoreRepo scoreRepo;
+    protected readonly IScoreRepo scoreRepo;
     public event Action? OnGameStateChanged;
 
     public BaseHangmanGame(IScoreRepo scoreRepo)

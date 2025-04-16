@@ -3,7 +3,7 @@
 
 <button @onclick=PlayerName>Enter Your Name</button>
 
-<img src="=@imgPath"/>
+<img src="@imgPath"/>
 
 
 
@@ -11,7 +11,7 @@
 {
     MultiplayerHangmanGame game = MultiplayerHangmanGame.Instance;
     int imgNum =1;
-    string imgPath => $"Step{imgNum}.png";
+    string imgPath => $"step {imgNum}.png";
 
     protected override void OnInitialized()
     {

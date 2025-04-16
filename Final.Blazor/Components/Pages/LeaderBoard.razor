@@ -1,5 +1,4 @@
 @page "/LeaderBoard"
-@inject IScoreRepo ScoreRepo
 <h1>Welcome to the LeaderBoard</h1>
 
 <table class="table table-striped">
@@ -30,6 +29,7 @@
 </table>
 
 @code {
+    
     private List<ScoreEntry> topScores;
 
     protected override async Task OnInitializedAsync()
@@ -39,6 +39,6 @@
 
     private async Task LoadLeaderboard()
     {
-        topScores = ScoreRepo.GetTopScores();
+        topScores = MultiplayerHangmanGame.Instance.GetTopScores();
     }
 }

@@ -1,10 +1,11 @@
 using System;
+using System.Net.Cache;
 
 namespace Final.Logic;
 
 public class MultiplayerHangmanGame : BaseHangmanGame
 {
-    //public static MultiplayerHangmanGame Instance {get; } = new MultiplayerHangmanGame();
+    public static MultiplayerHangmanGame Instance { get; }
     private static readonly Dictionary<WordCategory, List<string>> wordsByCategory = new()
         {
             { WordCategory.StarWars, new() { "vader", "yoda", "lightsaber", "Anakin", "Endor", "Hoth", "Skywalker"} },
@@ -14,6 +15,12 @@ public class MultiplayerHangmanGame : BaseHangmanGame
 
     private WordCategory category;
     private readonly IRandomSource random;
+    static MultiplayerHangmanGame()
+    {
+        var repo = new ScoreRepository("data.Db");
+        var random = new SystemRandomSource();
+        Instance = new(WordCategory.StarWars, random, repo);
+    }
 
     public MultiplayerHangmanGame(WordCategory category, IRandomSource random, IScoreRepo repo) : base(repo)
     {
@@ -26,4 +33,7 @@ public class MultiplayerHangmanGame : BaseHangmanGame
         var wordList = wordsByCategory[category];
         return wordList[random.Next(wordList.Count)];
     }
+
+    public List<ScoreEntry> GetTopScores(int count = 10) => scoreRepo.GetTopScores(count);
+
 }
