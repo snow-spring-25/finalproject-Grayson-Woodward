@@ -56,17 +56,14 @@
             @if (!string.IsNullOrEmpty(game.GameResult))
             {
                 <h2>@game.GameResult</h2>
+            }
 
-                @if (game.GameResult.Contains("won"))
-                {
-                    var winner = game.CurrentPlayer;
-                    <p><strong>@winner</strong> earned <strong>@game.GetPlayerScore(winner)</strong> points!</p>
-                    <p>Score saved to leaderboard.</p>
-                }
-                else if (game.IsGameOver)
-                {
-                    <p>No one won this time. Better luck next game!</p>
-                }
+            @if (joined && gameStarted)
+            {
+                <div class="card my-3 p-3" style="max-width: 200px;">
+                    <h5>Your Score</h5>
+                    <p class="display-6">@game.GetPlayerScore(playerName)</p>
+                </div>
             }
         }
     </div>
