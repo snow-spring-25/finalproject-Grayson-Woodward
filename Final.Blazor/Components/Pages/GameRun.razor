@@ -1,5 +1,6 @@
 @page "/GameRun"
 @using System.IO
+@implements IDisposable
 @rendermode InteractiveServer
 
 <h1>Multiplayer Hangman</h1>
@@ -55,10 +56,24 @@
             @if (!string.IsNullOrEmpty(game.GameResult))
             {
                 <h2>@game.GameResult</h2>
+
+                @if (game.GameResult.Contains("won"))
+                {
+                    var winner = game.CurrentPlayer;
+                    <p><strong>@winner</strong> earned <strong>@game.GetPlayerScore(winner)</strong> points!</p>
+                    <p>Score saved to leaderboard.</p>
+                }
+                else if (game.IsGameOver)
+                {
+                    <p>No one won this time. Better luck next game!</p>
+                }
             }
         }
     </div>
-    <img id="image" src="@imgPath" />
+
+    <div>
+        <img id="image" src="@imgPath" alt="Hangman Step" />
+    </div>
 </div>
 
 @code {
@@ -68,12 +83,21 @@
     private bool gameStarted = false;
     private string guessLetter = "";
 
-    private string imgPath => $"step {game.AttemptsLeft}.png";
+    private string imgPath => $"/step {game.AttemptsLeft}.png";
+
+    private Action? gameStateHandler;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        game.OnGameStateChanged += () => InvokeAsync(StateHasChanged);
+        gameStateHandler = () => InvokeAsync(StateHasChanged);
+        game.OnGameStateChanged += gameStateHandler;
+    }
+
+    public void Dispose()
+    {
+        if (gameStateHandler is not null)
+            game.OnGameStateChanged -= gameStateHandler;
     }
 
     private void JoinGame()
@@ -120,3 +144,4 @@
         guessLetter = "";
     }
 }
+
