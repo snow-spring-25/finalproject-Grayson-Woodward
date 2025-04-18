@@ -3,7 +3,7 @@ using System.Net.Cache;
 
 namespace Final.Logic;
 
-public class MultiplayerHangmanGame : BaseHangmanGame
+public class MultiplayerHangmanGame : BaseHangmanGame //Req 2.1.2
 {
     public static MultiplayerHangmanGame Instance { get; }
     private static readonly Dictionary<WordCategory, List<string>> wordsByCategory = new()

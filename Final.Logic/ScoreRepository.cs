@@ -12,9 +12,9 @@ public class ScoreRepository : IScoreRepo //Req 1.8.3
         db.CreateTable<ScoreEntry>();
     }
 
-    public void AddScore(string playerName, int score)
+    public void AddScore(string playerName, int score)  //Req 4.1.1
     {
-        var allScores = db.Table<ScoreEntry>().ToList();
+        var allScores = db.Table<ScoreEntry>().ToList(); //Req 5.1.1
         var existingScore = allScores.FirstOrDefault(s => s.PlayerName == playerName);
         if (existingScore != null)
         {
@@ -26,7 +26,7 @@ public class ScoreRepository : IScoreRepo //Req 1.8.3
         db.Insert(new ScoreEntry { PlayerName = playerName, Score = score });
     }
 
-    public List<ScoreEntry> GetTopScores(int count = 10)
+    public List<ScoreEntry> GetTopScores(int count = 10) //Req 4.1.2 also happens in leaderboard razor
     {
         return db.Table<ScoreEntry>()
                  .OrderByDescending(s => s.Score)

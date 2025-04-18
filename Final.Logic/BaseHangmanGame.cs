@@ -1,7 +1,7 @@
 using System;
 
 namespace Final.Logic;
-
+//Req 2.1.1 Only one inherets though
 public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
 {
     protected readonly int maxAttempts = 5; // Req 1.5.3

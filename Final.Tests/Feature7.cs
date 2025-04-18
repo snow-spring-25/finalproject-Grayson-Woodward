@@ -5,7 +5,7 @@ namespace Final.Tests;
 public class Feature7
 {
     [Test]
-    public void GetPlayerScoreExistingPlayerReturnsCorrectScore() // Req 1.7.3
+    public void GetPlayerScoreExistingPlayerReturnsCorrectScore() // Req 1.7.1
     {   
         var game = new MultiplayerHangmanGame(WordCategory.StarWars, new TestRandomSource(1),new TestRepository());
         game.AddPlayer("Luke");
@@ -24,7 +24,7 @@ public class Feature7
     }
 
     [Test]
-    public void GetPlayerScoreNonExistentPlayerThrowsArgumentException() // Req 1.7.3
+    public void GetPlayerScoreNonExistentPlayerThrowsArgumentException() // Req 1.7.2
     {
         var game = new MultiplayerHangmanGame(WordCategory.StarWars, new TestRandomSource(1), new TestRepository());
         game.AddPlayer("Kaladin");

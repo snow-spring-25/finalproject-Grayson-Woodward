@@ -27,7 +27,7 @@ public class Feature1
         Assert.That(ex.Message, Does.Contain("You cannot add players after the game has started. Please wait for a new round to join."));
     }
 
-    [Test] // REQ#1.1.3
+    [Test] // REQ#1.1.2
     public void StartGameWithoutPlayersShouldThrow()
     {
         var game = new MultiplayerHangmanGame(WordCategory.StarWars, new TestRandomSource(0), new TestRepository());
@@ -37,7 +37,7 @@ public class Feature1
         Assert.That(ex.Message, Does.Contain("Cannot start the game without at least one player. Please add players first"));
     }
 
-    [Test] // REQ#1.1.4
+    [Test] // REQ#1.1.1
     public void StartGameWithMultiplePlayersShouldInitializeCurrentPlayer()
     {
         var game = new MultiplayerHangmanGame(WordCategory.StarWars, new TestRandomSource(0), new TestRepository());

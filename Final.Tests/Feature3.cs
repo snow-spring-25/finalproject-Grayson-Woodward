@@ -4,7 +4,7 @@ namespace Final.Tests;
 
 public class Feature3
 {
-    [Test] // Req 1.3.3
+    [Test] // Req 1.3.1
     public void MakeGuess_ShouldNotifyPlayers_WhenGameEnds_WithWin()
     {
         var category = WordCategory.StarWars;
@@ -21,7 +21,7 @@ public class Feature3
 
         Assert.That(game.GameResult, Is.EqualTo("You won! The person didn't die"));
     }
-    [Test] // Req 1.3.3
+    [Test] // Req 1.3.2
     public void MakeGuess_ShouldNotifyPlayers_WhenGameEnds_WithLoss()
     {
         var category = WordCategory.StarWars;
