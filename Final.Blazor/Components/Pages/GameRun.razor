@@ -29,6 +29,7 @@
         else
         {
             <h3>Game Started!</h3>
+            <p>Category: @category</p>
             <p>Word: @game.CurrentMaskedWord</p>
             <p>Current Player: @game.CurrentPlayer</p>
 
@@ -56,6 +57,7 @@
             @if (!string.IsNullOrEmpty(game.GameResult))
             {
                 <h2>@game.GameResult</h2>
+                //<button @onclick="PlayAgain">Play Again!</button>
             }
 
             @if (joined && gameStarted)
@@ -79,6 +81,7 @@
     private bool joined = false;
     private bool gameStarted = false;
     private string guessLetter = "";
+    private string category = "Star Wars";
 
     private string imgPath => $"/step {game.AttemptsLeft}.png";
 
@@ -140,5 +143,10 @@
 
         guessLetter = "";
     }
+    
+    //private void PlayAgain()
+    //{
+      //  game.ResetGame();
+    //}
 }
 

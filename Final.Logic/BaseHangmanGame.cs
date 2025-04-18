@@ -38,7 +38,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
         {
             if (wordToGuess.All(c => guessedLetters.Contains(char.ToLower(c))))
             {
-                GameResult = "You won!";
+                GameResult = "You won! The person didn't die";
             }
             else if (attemptsLeft <= 0)
             {
@@ -131,4 +131,9 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
     }
 
     protected abstract string PickRandomWord(); // Req 1.2.3
+
+    //public void ResetGame()
+    //{
+
+    //}
 }
