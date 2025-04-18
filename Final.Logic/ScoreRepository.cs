@@ -14,6 +14,15 @@ public class ScoreRepository : IScoreRepo //Req 1.8.3
 
     public void AddScore(string playerName, int score)
     {
+        var allScores = db.Table<ScoreEntry>().ToList();
+        var existingScore = allScores.FirstOrDefault(s => s.PlayerName == playerName);
+        if (existingScore != null)
+        {
+            existingScore.Score += score; 
+            db.Update(existingScore);
+            return;
+        }
+
         db.Insert(new ScoreEntry { PlayerName = playerName, Score = score });
     }
 

@@ -71,9 +71,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
             throw new InvalidOperationException("Cannot start the game without at least one player. Please add players first."); // Req 1.6.3
 
         started = true;
-        attemptsLeft = maxAttempts;
-        wordToGuess = PickRandomWord();
-
+        ResetGame();
         OnGameStateChanged?.Invoke();
     }
 
@@ -132,8 +130,22 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
 
     protected abstract string PickRandomWord(); // Req 1.2.3
 
-    //public void ResetGame()
-    //{
+    public void StartNewRound()
+    {
+        players.Clear();
+        PlayerScores.Clear();
+        started = false;
+        ResetGame();
+    }
 
-    //}
+    public void ResetGame()
+    {
+        attemptsLeft = maxAttempts;
+        wordToGuess = PickRandomWord();
+        guessedLetters.Clear();
+        incorrectGuesses.Clear();
+        GameResult = string.Empty;
+
+        OnGameStateChanged?.Invoke();
+    }
 }

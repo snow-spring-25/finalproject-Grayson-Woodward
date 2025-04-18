@@ -10,8 +10,10 @@
         @if (!joined)
         {
             <p>Enter your name to join:</p>
+            <form @onsubmit="JoinGame">
             <input @bind="playerName" placeholder="Your name" />
-            <button @onclick="JoinGame">Join</button>
+            <button type="submit">Join</button>
+            </form>
         }
         else if (!gameStarted)
         {
@@ -37,8 +39,11 @@
             {
                 <p>It's your turn! Play!</p>
 
-                <input @bind="guessLetter" maxlength="1" placeholder="Guess a letter" />
-                <button @onclick="OnLetterGuess">Guess</button>
+                <form @onsubmit="OnLetterGuess">
+                    <label for="guessLetter">Guess a letter:</label>
+                    <input @bind="guessLetter" maxlength="1" placeholder="Guess a letter" />
+                    <button type="submit">Guess</button>
+                </form>
             }
 
             <p>Attempts Left: @game.AttemptsLeft</p>
@@ -57,7 +62,7 @@
             @if (!string.IsNullOrEmpty(game.GameResult))
             {
                 <h2>@game.GameResult</h2>
-                //<button @onclick="PlayAgain">Play Again!</button>
+                <button @onclick="PlayAgain">Play Again!</button>
             }
 
             @if (joined && gameStarted)
@@ -126,7 +131,7 @@
         }
     }
 
-    private void OnLetterGuess(MouseEventArgs e)
+    private void OnLetterGuess()
     {
         if (string.IsNullOrEmpty(guessLetter) || guessLetter.Length != 1)
             return;
@@ -143,10 +148,11 @@
 
         guessLetter = "";
     }
+    //make option to guess the whole word
     
-    //private void PlayAgain()
-    //{
-      //  game.ResetGame();
-    //}
+    private void PlayAgain()
+    {
+        game.Start();
+    }
 }
 
