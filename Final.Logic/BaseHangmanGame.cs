@@ -8,7 +8,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
     protected int attemptsLeft; // Req 1.5.3
     protected string wordToGuess = "";
     protected HashSet<char> guessedLetters = new();
-    protected List<string> players = new();
+    public List<string> players = new();
     protected int currentPlayerIndex = 0;
     protected bool started = false;
     protected Dictionary<string, int> playerScores = new Dictionary<string, int>();

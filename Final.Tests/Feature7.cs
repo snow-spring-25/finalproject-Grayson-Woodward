@@ -26,7 +26,7 @@ public class Feature7
     [Test]
     public void GetPlayerScoreNonExistentPlayerThrowsArgumentException() // Req 1.7.3
     {
-        var game = new MultiplayerHangmanGame(WordCategory.Cosmere, new TestRandomSource(1), new TestRepository());
+        var game = new MultiplayerHangmanGame(WordCategory.StarWars, new TestRandomSource(1), new TestRepository());
         game.AddPlayer("Kaladin");
         game.Start();
 
