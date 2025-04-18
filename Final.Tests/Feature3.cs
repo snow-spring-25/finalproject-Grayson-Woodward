@@ -19,7 +19,7 @@ public class Feature3
         game.MakeGuess('e', "Player2");
         game.MakeGuess('r', "Player1");
 
-        Assert.That(game.GameResult, Is.EqualTo("You won!"));
+        Assert.That(game.GameResult, Is.EqualTo("You won! The person didn't die"));
     }
     [Test] // Req 1.3.3
     public void MakeGuess_ShouldNotifyPlayers_WhenGameEnds_WithLoss()

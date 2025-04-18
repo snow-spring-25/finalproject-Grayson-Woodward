@@ -18,11 +18,11 @@ public class Feature1 //req1.1.1 & 1.1.2
     [Test]
     public void JoinGameAfterGameStartedShouldReturnNull()
     {
-        var game = GameLobby.CreateGame(WordCategory.Foods);
+        var game = GameLobby.CreateGame(WordCategory.Cosmere);
         game.AddPlayer("PlayerOne");
         game.Start(); 
 
-        var joined = GameLobby.JoinGame(WordCategory.Foods);
+        var joined = GameLobby.JoinGame(WordCategory.Cosmere);
 
         Assert.That(joined, Is.Null);
     }
