@@ -11,7 +11,7 @@ public class MultiplayerHangmanGame : BaseHangmanGame //Req 2.1.2
             { WordCategory.StarWars, new() { "vader", "yoda", "lightsaber", "Anakin", "Endor", "Hoth", "Skywalker", "Leia",  "stormtrooper", "Palpatine", "Maul", "Padawan", "Master", "Wookie", "Chewbaca", "blaster", "Mandalorian"} },
             //{ WordCategory.Cosmere, new() { "storm", "shardblade", "fabrial", "Kaladin", "Dalinar", "Windrunner", "Mistborn", "Harmony" } },
             //{ WordCategory.Foods, new() { "pizza", "sushi", "lasagna", "Steak", "Pineapple", "Calazone", "Pretzel", "Hamburger" } }
-        };
+        }; //couldn't get it to work on time. Ill do it during summer.
 
     private WordCategory category;
     private readonly IRandomSource random;

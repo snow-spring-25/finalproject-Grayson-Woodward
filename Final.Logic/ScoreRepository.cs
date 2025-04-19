@@ -18,7 +18,7 @@ public class ScoreRepository : IScoreRepo //Req 1.8.3
         var existingScore = allScores.FirstOrDefault(s => s.PlayerName == playerName);
         if (existingScore != null)
         {
-            existingScore.Score += score; 
+            existingScore.Score += score;
             db.Update(existingScore);
             return;
         }
@@ -28,7 +28,7 @@ public class ScoreRepository : IScoreRepo //Req 1.8.3
 
     public List<ScoreEntry> GetTopScores(int count = 10) //Req 4.1.2 also happens in leaderboard razor
     {
-        return db.Table<ScoreEntry>()
+        return db.Table<ScoreEntry>()//Req 5.1.1
                  .OrderByDescending(s => s.Score)
                  .Take(count)
                  .ToList();

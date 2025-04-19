@@ -8,7 +8,7 @@ public class Feature5
     public void Player1MakesTheRightGuessAndGetsPoints()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0),new TestRepository());
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0), new TestRepository());
         game.AddPlayer("Player1");
         game.AddPlayer("Player2");
         game.Start();
@@ -25,7 +25,7 @@ public class Feature5
     public void Player2DoesntGetPoints()
     {
         var category = WordCategory.StarWars;
-        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0),new TestRepository());
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0), new TestRepository());
         game.AddPlayer("Player1");
         game.AddPlayer("Player2");
         game.Start();
@@ -37,5 +37,31 @@ public class Feature5
         game.MakeGuess('r', "Player1");
 
         Assert.That(game.PlayerScores["Player2"], Is.EqualTo(0));
+    }
+
+    [Test] // Req 1.5.1
+    public void Player1MakesTheRightGuessAttemptsLeftDoesntChange()
+    {
+        var category = WordCategory.StarWars;
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0), new TestRepository());
+        game.AddPlayer("Player1");
+        game.AddPlayer("Player2");
+        game.Start();
+
+        game.MakeGuess('v', "Player1");
+        Assert.That(game.AttemptsLeft, Is.EqualTo(5));
+    }
+
+    [Test] // Req 1.5.1
+    public void Player1MakesTheWrongGuessAndAttemptsLeftDoesChange()
+    {
+        var category = WordCategory.StarWars;
+        var game = new MultiplayerHangmanGame(category, new TestRandomSource(0), new TestRepository());
+        game.AddPlayer("Player1");
+        game.AddPlayer("Player2");
+        game.Start();
+
+        game.MakeGuess('t', "Player1");
+        Assert.That(game.AttemptsLeft, Is.EqualTo(4));
     }
 }

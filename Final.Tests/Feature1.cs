@@ -12,7 +12,7 @@ public class Feature1
         game.AddPlayer("PlayerOne");
 
         Assert.That(game.players, Does.Contain("PlayerOne"));
-        Assert.That(game.CurrentPlayer, Is.EqualTo("PlayerOne")); 
+        Assert.That(game.CurrentPlayer, Is.EqualTo("PlayerOne"));
     }
 
     [Test] // REQ#1.1.2
@@ -46,8 +46,8 @@ public class Feature1
 
         game.Start();
 
-        Assert.That(game.CurrentPlayer, Is.EqualTo("PlayerOne")); 
-        Assert.That(game.CurrentMaskedWord.Length, Is.GreaterThan(0)); 
+        Assert.That(game.CurrentPlayer, Is.EqualTo("PlayerOne"));
+        Assert.That(game.CurrentMaskedWord.Length, Is.GreaterThan(0));
     }
 }
 

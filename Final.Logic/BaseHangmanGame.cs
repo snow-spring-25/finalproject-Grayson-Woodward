@@ -22,7 +22,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
         this.scoreRepo = scoreRepo;
     }
 
-    public bool IsGameOver => attemptsLeft <= 0 || wordToGuess.All(c => guessedLetters.Contains(char.ToLower(c)));
+    public bool IsGameOver => attemptsLeft <= 0 || wordToGuess.All(c => guessedLetters.Contains(char.ToLower(c)));//Req 1.3.3
 
     public string CurrentPlayer => players.Count > 0 ? players[currentPlayerIndex] : null;
 
@@ -36,7 +36,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
     {
         if (IsGameOver)
         {
-            if (wordToGuess.All(c => guessedLetters.Contains(char.ToLower(c))))
+            if (wordToGuess.All(c => guessedLetters.Contains(char.ToLower(c)))) //This is what the test is testing for Req 1.3.3
             {
                 GameResult = "You won! The person didn't die";
             }
@@ -44,7 +44,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
             {
                 GameResult = "You let the person die.";
             }
-            
+
             foreach (var player in playerScores) //Req 1.8.3
             {
                 scoreRepo.AddScore(player.Key, player.Value);
@@ -75,7 +75,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
         OnGameStateChanged?.Invoke();
     }
 
-    public bool MakeGuess(char letter, string playerName)
+    public bool MakeGuess(char letter, string playerName) //Req 1.2.3
     {
         if (!started)
             throw new InvalidOperationException("The game has not started yet. Please start the game first."); // Req 1.6.3
@@ -84,12 +84,12 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
             throw new InvalidOperationException("The game is over. Please start a new game."); // Req 1.6.3
 
         if (playerName != CurrentPlayer)
-            throw new InvalidOperationException($"It's not your turn, {playerName}. Please wait for {CurrentPlayer} to make a move."); // Req 1.6.3
+            throw new InvalidOperationException($"It's not your turn, {playerName}. Please wait for {CurrentPlayer} to make a move."); // Req 1.4.3
 
         letter = char.ToLower(letter);
 
         if (guessedLetters.Contains(letter))
-            throw new InvalidOperationException($"The letter '{letter}' has already been guessed. Please try a different letter."); // Req 1.6.3
+            throw new InvalidOperationException($"The letter '{letter}' has already been guessed. Please try a different letter."); // Req 1.4.3
 
         guessedLetters.Add(letter);
 
@@ -101,7 +101,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
         {
             playerScores[playerName] += wordToGuess.Length * 5;
         }
-        else if (!correctGuess)
+        else if (!correctGuess) //Req 1.5.3
         {
             incorrectGuesses.Add(letter);
             attemptsLeft--;
@@ -120,17 +120,17 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
 
     public IEnumerable<char> GetIncorrectGuesses() => incorrectGuesses;
 
-    public int GetPlayerScore(string playerName) // Req 1.7.3
+    public int GetPlayerScore(string playerName) // Req 1.7.3 Its used in blazor for individual view score.
     {
         if (!playerScores.ContainsKey(playerName))
-            throw new ArgumentException("Player not found."); 
+            throw new ArgumentException("Player not found.");
 
         return playerScores[playerName];
     }
 
     protected abstract string PickRandomWord(); // Req 1.2.3
 
-    public void StartNewRound()
+    public void StartNewRound()  //Req 1.1.3
     {
         players.Clear();
         PlayerScores.Clear();
@@ -138,7 +138,7 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
         ResetGame();
     }
 
-    public void ResetGame()
+    public void ResetGame() //Req 1.1.3 
     {
         attemptsLeft = maxAttempts;
         wordToGuess = PickRandomWord();
