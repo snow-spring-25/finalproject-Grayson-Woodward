@@ -41,3 +41,13 @@ h1:focus {
     display: flex;
     flex-direction: row;
 }
+h1 {
+    color: crimson;
+}
+h2 {
+    color: darkblue;
+}
+
+p {
+    color: darkgray;
+}
