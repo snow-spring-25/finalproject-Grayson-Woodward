@@ -111,6 +111,7 @@
 
     private void JoinGame()
     {
+        playerName = playerName?.Trim();
         try
         {
             game.AddPlayer(playerName);

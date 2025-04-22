@@ -58,6 +58,10 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
     {
         if (started)
             throw new InvalidOperationException("You cannot add players after the game has started. Please wait for a new round to join."); // Req 1.6.3
+        if (string.IsNullOrWhiteSpace(playerName))
+            throw new ArgumentException("Player name cannot be empty or whitespace.", nameof(playerName)); // Req 1.1.4
+        if (players.Contains(playerName))
+            throw new ArgumentException("This player name is already taken. Please choose a different name.", nameof(playerName));
 
         players.Add(playerName);
         playerScores[playerName] = 0;
