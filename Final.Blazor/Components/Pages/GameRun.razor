@@ -2,6 +2,7 @@
 @using System.IO
 @implements IDisposable
 @rendermode InteractiveServer
+@inject NavigationManager Navigation
 
 <h1>Multiplayer Hangman</h1>
 
@@ -62,7 +63,10 @@
             @if (!string.IsNullOrEmpty(game.GameResult))
             {
                 <h2>@game.GameResult</h2>
-                <button @onclick="PlayAgain">Play Again!</button>
+                <div class=" d-flex gap -2">
+                    <button @onclick="PlayAgain">Play Again!</button>
+                    <button @onclick="GoHome">Go to Home Page</button>
+                </div>
             }
 
             @if (joined && gameStarted)
@@ -152,6 +156,11 @@
     private void PlayAgain()
     {
         game.Start();
+    }
+
+    private void GoHome()
+    {
+        Navigation.NavigateTo("/");
     }
 }
 
