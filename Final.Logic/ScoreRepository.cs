@@ -34,4 +34,3 @@ public class ScoreRepository : IScoreRepo //Req 1.8.3
                  .ToList();
     }
 }
-
