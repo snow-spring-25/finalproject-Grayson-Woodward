@@ -58,10 +58,10 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
     {
         if (started)
             throw new InvalidOperationException("You cannot add players after the game has started. Please wait for a new round to join."); // Req 1.6.3
-        
+
         if (string.IsNullOrWhiteSpace(playerName))
             throw new ArgumentException("Player name cannot be empty or whitespace.", nameof(playerName)); // Req 1.1.4
-        
+
         if (players.Contains(playerName))
             throw new ArgumentException("This player name is already taken. Please choose a different name.", nameof(playerName));
 
@@ -122,6 +122,44 @@ public abstract class BaseHangmanGame : IHangmanGame // Req 1.2.3
         OnGameStateChanged?.Invoke();
 
         return correctGuess;
+    }
+    public bool GuessWord(string guess, string playerName) //Req 1.5.3
+    {
+        if (!started)
+            throw new InvalidOperationException("The game has not started yet. Please start the game first.");
+
+        if (IsGameOver)
+            throw new InvalidOperationException("The game is over. Please start a new game.");
+
+        if (playerName != CurrentPlayer)
+            throw new InvalidOperationException($"It's not your turn, {playerName}. Please wait for {CurrentPlayer} to make a move.");
+
+        guess = guess.Trim().ToLower();
+        string targetWord = wordToGuess.ToLower();
+
+        bool isCorrect = guess == targetWord;
+
+        if (isCorrect)
+        {
+            foreach (char c in wordToGuess.ToLower())
+                guessedLetters.Add(c);
+
+            playerScores[playerName] += wordToGuess.Length * 10;
+        }
+        else
+        {
+            attemptsLeft--; 
+        }
+
+        if (!IsGameOver && attemptsLeft > 0)
+        {
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.Count;
+        }
+
+        EndGame();
+        OnGameStateChanged?.Invoke();
+
+        return isCorrect;
     }
 
     public IEnumerable<char> GetIncorrectGuesses() => incorrectGuesses;

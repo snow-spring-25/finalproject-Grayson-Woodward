@@ -12,8 +12,8 @@
         {
             <p>Enter your name to join:</p>
             <form @onsubmit="JoinGame">
-            <input @bind="playerName" placeholder="Your name" />
-            <button type="submit">Join</button>
+                <input @bind="playerName" placeholder="Your name" />
+                <button type="submit">Join</button>
             </form>
         }
         else if (!gameStarted)
@@ -38,11 +38,11 @@
 
             @if (game.CurrentPlayer == playerName)
             {
-                <p>It's your turn! Play!</p>
+                <p>It's your turn! Choose your guess:</p>
 
-                <form @onsubmit="OnLetterGuess">
-                    <label for="guessLetter">Guess a letter:</label>
-                    <input @bind="guessLetter" maxlength="1" placeholder="Guess a letter" />
+                <form @onsubmit="OnGuess">
+                    <label for="guessInput">Guess a letter or the full word:</label>
+                    <input @bind="guessInput" placeholder="Enter letter or word" />
                     <button type="submit">Guess</button>
                 </form>
             }
@@ -51,7 +51,7 @@
 
             @if (game.GetIncorrectGuesses().Any())
             {
-                <p><strong>Incorrect Guesses:</strong></p>
+                <p><strong>Incorrect Letter Guesses:</strong></p>
                 <div>
                     @foreach (var incorrectGuess in game.GetIncorrectGuesses())
                     {
@@ -63,7 +63,7 @@
             @if (!string.IsNullOrEmpty(game.GameResult))
             {
                 <h2>@game.GameResult</h2>
-                <div class=" d-flex gap -2">
+                <div class="d-flex gap-2">
                     <button @onclick="PlayAgain">Play Again!</button>
                     <button @onclick="GoHome">Go to Home Page</button>
                 </div>
@@ -89,7 +89,7 @@
     private string playerName = "";
     private bool joined = false;
     private bool gameStarted = false;
-    private string guessLetter = "";
+    private string guessInput = "";
     private string category = "Star Wars";
 
     private string imgPath => $"/step {game.AttemptsLeft}.png";
@@ -136,24 +136,33 @@
         }
     }
 
-    private void OnLetterGuess()
+    private void OnGuess()
     {
-        if (string.IsNullOrEmpty(guessLetter) || guessLetter.Length != 1)
+        guessInput = guessInput.Trim();
+
+        if (string.IsNullOrEmpty(guessInput))
             return;
 
-        char guessedChar = char.ToLower(guessLetter[0]);
         try
         {
-            bool correctGuess = game.MakeGuess(guessedChar, playerName);
+            if (guessInput.Length == 1)
+            {
+                char guessedChar = char.ToLower(guessInput[0]);
+                game.MakeGuess(guessedChar, playerName);
+            }
+            else
+            {
+                game.GuessWord(guessInput, playerName);
+            }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error making guess: {ex.Message}");
         }
 
-        guessLetter = "";
+        guessInput = "";
     }
-    
+
     private void PlayAgain()
     {
         game.Start();
